@@ -16,7 +16,16 @@ public class Blocks : MonoBehaviour
     void Start()
     {
         BlockPosesToScreenBorder();
+        StartCoroutine(ShowBlocks());
         
+    }
+
+    
+
+    IEnumerator ShowBlocks()
+    {
+        yield return new WaitForSeconds(1f);
+        GetComponent<Animator>().SetBool("blockShow", true);
     }
     /// <summary>
     /// Animation event: Block Fadein.
@@ -27,23 +36,25 @@ public class Blocks : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (!smTest)
-            {
-                smTest = true;
-                GetComponent<Animator>().SetBool("blockShow", true);
-            }
-            //else
-            //{
-            //    smTest = false;
-            //    GetComponent<Animator>().SetBool("blockShow", false);
-            //}
+    //void Update()
+    //{
+    //    if (Input.GetMouseButtonDown(0))
+    //    {
+    //        if (!smTest)
+    //        {
+    //            smTest = true;
+                
+    //        }
+    //        //else
+    //        //{
+    //        //    smTest = false;
+    //        //    GetComponent<Animator>().SetBool("blockShow", false);
+    //        //}
             
-        }
-    }
+    //    }
+    //}
+
+   
 
     private void BlockPosesToScreenBorder()
     {

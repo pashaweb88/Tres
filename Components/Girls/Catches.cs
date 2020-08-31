@@ -11,6 +11,7 @@ public class Catches : MonoBehaviour
 
     public int stateIndex;
 
+    private int hardlesCounter = 0;
     
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -20,6 +21,7 @@ public class Catches : MonoBehaviour
             Destroy(collision.gameObject);
             PointsEffect100();
             UpdateScore();
+            gameState.GetComponent<GameState>().DoHardestTimer();
         }
     }
 

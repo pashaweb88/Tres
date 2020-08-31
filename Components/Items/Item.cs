@@ -17,4 +17,9 @@ public class Item : MonoBehaviour
     {
         needIndex = index;
     }
+
+    public void DestroyItem()
+    {
+        Destroy(gameObject);
+    }
 }

@@ -6,7 +6,7 @@ public class Ground : MonoBehaviour
 {
     public GameObject gameState;
 
-    public GameObject currnetLifeIcon;
+   
 
     
     private void OnCollisionEnter2D(Collision2D collision)
@@ -14,9 +14,9 @@ public class Ground : MonoBehaviour
         GameState states = gameState.GetComponent<GameState>();
 
         states.StopSpawner();
-        
-        Destroy(collision.gameObject);
+        states.GameLoose();
+        //Destroy(collision.gameObject);
 
-        currnetLifeIcon.GetComponent<Life>().LoseLifeEffect();
+        
     }
 }

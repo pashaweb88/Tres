@@ -21,11 +21,28 @@ public class ItemSpawner : MonoBehaviour
 
     private bool canSpawn = false;
 
+    private int hardlesCounter = 0;
+    private int hardlesLevel = 5;
+
+    private Vector2[] bornCoords;
+
     // Start is called before the first frame update
     public void SetCanSpawn(bool spawn)
     {
         canSpawn = spawn;
     }
+
+    private void Start()
+    {
+        CalculateBornCords();
+    }
+    private void CalculateBornCords()
+    {
+        minX = Camera.main.ViewportToWorldPoint(new Vector2(0, 0)).x;
+        maxX = Camera.main.ViewportToWorldPoint(new Vector2(1, 1)).x;
+        bornCoords = new Vector2[4] { new Vector2(minX, maxY), new Vector2(maxX, maxY), new Vector2(minX, minY), new Vector2(maxX, minY) };
+    }
+
 
     // Update is called once per frame
     void Update()
@@ -40,23 +57,29 @@ public class ItemSpawner : MonoBehaviour
             }
         }
     }
+    public void GoHarder()
+    {
+        hardlesCounter++;
+        
+        if (hardlesCounter == hardlesLevel)
+        {
+            hardlesCounter = 0;
+            hardlesLevel += 1;
+            if (time >= 0.3)
+            {
+                time -= 0.1f;
+            }
+        }
+       
+    }
 
     private void BornNewItem()
     {
-        minX = Camera.main.ViewportToWorldPoint(new Vector2(0, 0)).x;
-        maxX = Camera.main.ViewportToWorldPoint(new Vector2(1, 1)).x;
+        int randomEl = Random.Range(0, itemSpriteList.Count);
+        int randomPosIndex = Random.Range(0, 4);
 
-        Vector2[] bornCoords = new Vector2[4]
-        {
-            new Vector2(minX, maxY),
-            new Vector2(maxX, maxY),
-            new Vector2(minX, minY),
-            new Vector2(maxX, minY)
-        };
-       
-        var randomEl = Random.Range(0, itemSpriteList.Count);
-        var randomPosIndex = Random.Range(0, 4);
-        var bornIttem = Instantiate(itemPrefab, bornCoords[randomPosIndex], Quaternion.identity) as GameObject;
+        GameObject bornIttem = Instantiate(itemPrefab, bornCoords[randomPosIndex], Quaternion.identity) as GameObject;
+
         bornIttem.GetComponent<SpriteRenderer>().sprite = itemSpriteList[randomEl];
         bornIttem.GetComponent<Item>().SetNeedIndex(randomPosIndex);
 

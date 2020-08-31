@@ -4,14 +4,22 @@ using UnityEngine;
 
 public class GameScore : MonoBehaviour
 {
-    [SerializeField]
-    private int gameScore;
+    
+    private int gameScore = 0;
 
-    private void Start()
+
+    private void Awake()
     {
-        gameScore = 0;
-    }
+        int gameScoreCount = FindObjectsOfType<GameScore>().Length;
 
+        if (gameScoreCount > 1)
+        {
+            Destroy(gameObject);
+        } else
+        {
+            DontDestroyOnLoad(gameObject);
+        }
+    }
     public void SetGameScore(int score)
     {
         gameScore += score;
